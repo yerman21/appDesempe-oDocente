@@ -1,0 +1,17 @@
+aniso8601==8.0.0
+certifi==2019.9.11
+Click==7.0
+Flask==1.1.1
+Flask-RESTful==0.3.7
+itsdangerous==1.1.0
+Jinja2==2.10.1
+MarkupSafe==1.1.1
+numpy==1.17.2
+pipenv==2018.11.26
+py4j==0.10.7
+pyspark==2.4.4
+pytz==2019.2
+six==1.12.0
+virtualenv==16.7.5
+virtualenv-clone==0.5.3
+Werkzeug==0.15.6
