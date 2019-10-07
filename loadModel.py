@@ -1,23 +1,28 @@
-from pyspark import SparkContext
-from pyspark.sql import SQLContext, SparkSession
-from pyspark.ml import PipelineModel
-#from pyspark.mllib.util import MLUtils
+import pickle
 
 class LoadModel(object):
-    _spark = None
+    _directory = "model_prediction"
+    models = ("naivebayes", "multinomial")
+    models_path = ("gaus_model_desempeñoD_pickle", "model_desempeñoD_pickle")
 
-    def __init__(self, pathModel):
-        self.model = None        
-        self.features = ["Experiencia Profesional", "Dominio de Temas", "Didactica del Docente", 
-        "Planificacion de Clases", "Uso de Recursos", "Evaluacion", "Servicio Misionero"]
-        self.model = PipelineModel.load(pathModel)
-        _spark = SparkSession.builder.appName("Desempenho_Docente").getOrCreate()
-        SparkContext.getOrCreate()
-    
+    def __init__(self, model_type):
+        import os.path
+        try :
+            index_model_path = LoadModel.models.index(model_type)
+        except ValueError as e:
+            print("El tipo de modelo {} no se encuentra".format(model_type))
+            return None
+
+        path_model = os.path.join(self._directory, LoadModel.models_path[index_model_path])
+        if not os.path.isfile(path_model):
+            print("No se encontro el modelo {} para cargar".format(path_model))
+            return None
+                    
+        self.model_type = model_type
+        self.model = pickle.load(open(path_model, 'rb'))
+        print("Modelo cargado")
+
     def predict(self, listTuplesToPredict):
         if not self.model:
-            return
-        df_to_predict = _spark.createDataFrame(listTuplesToPredict, self.features)
-        prediction = self.model.transform(df_to_predict)
-        prediction.select('prediction','probability').show()
-        return prediction.select("prediction","probability")
+            return None
+        return self.model.predict(listTuplesToPredict)
