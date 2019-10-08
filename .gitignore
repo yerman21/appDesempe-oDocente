@@ -5,4 +5,6 @@
 [Tt]cl
 __pycache__
 .vscode
-model_prediction
+[Mm]odel_prediction
+gaus_model_desempeñoD_pickle
+model_desempeñoD_pickle
