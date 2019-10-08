@@ -21,4 +21,4 @@ class Predecir(Resource):
 
         to_predict = [(args["EP"], args["DT"], args["DD"], args["PC"], args["UR"], args["E"], args["SM"])]
         prediction = model.predict(to_predict)
-        return {"satisfaccion_servicio" : prediction[0]}
+        return {"satisfaccion_servicio" : str(prediction[0])}
